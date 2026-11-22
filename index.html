@@ -31,12 +31,10 @@
   </script>
 
   <style>
-    /* Memastikan responsivitas sentuhan & menghilangkan delay tap 300ms di perangkat mobile */
     button, a, input, select, textarea {
       touch-action: manipulation;
     }
 
-    /* Custom scrollbar yang rapi untuk area kode script & modal */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -52,7 +50,6 @@
       background: rgba(100, 116, 139, 0.7);
     }
 
-    /* Animasi masuk halus untuk perpindahan langkah */
     @keyframes fadeSlideIn {
       from {
         opacity: 0;
@@ -70,20 +67,14 @@
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased transition-colors duration-200 selection:bg-indigo-600 selection:text-white">
 
-  <!-- ===================================================================== -->
-  <!-- TOAST NOTIFICATION (Selalu pointer-events-none agar tidak blok klik)   -->
-  <!-- ===================================================================== -->
+  <!-- TOAST NOTIFICATION -->
   <div id="toastContainer" aria-live="polite" class="fixed top-4 right-4 left-4 sm:left-auto sm:w-96 z-[60] flex flex-col gap-2.5 pointer-events-none"></div>
 
-  <!-- ===================================================================== -->
-  <!-- HEADER UTAMA                                                          -->
-  <!-- ===================================================================== -->
+  <!-- HEADER UTAMA -->
   <header class="sticky top-0 z-30 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 transition-colors">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-3">
-      <!-- Kiri: Identitas Aplikasi & Badge Mode Aktif -->
       <div class="flex items-center gap-3 min-w-0">
         <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-indigo-600 to-blue-700 text-white flex items-center justify-center shadow-md shadow-indigo-600/20 shrink-0">
-          <!-- Ikon Perisai Centang -->
           <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
           </svg>
@@ -108,7 +99,6 @@
         </div>
       </div>
 
-      <!-- Kanan: Tombol Admin Panel & Toggle Dark/Light Mode -->
       <div class="flex items-center gap-2 shrink-0">
         <button
           type="button"
@@ -116,7 +106,6 @@
           class="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 dark:text-slate-200 bg-slate-100 hover:bg-slate-200/80 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200/80 dark:border-slate-700 transition-all active:scale-95 cursor-pointer"
           aria-label="Buka Admin Panel"
         >
-          <!-- Ikon Gembok -->
           <svg class="w-4 h-4 text-indigo-600 dark:text-indigo-400 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
           </svg>
@@ -131,11 +120,9 @@
           aria-label="Ubah Tema Terang atau Gelap"
           title="Ubah Tema"
         >
-          <!-- Ikon Bulan (Light Mode -> switch to Dark) -->
           <svg id="iconMoon" class="w-4 h-4 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
           </svg>
-          <!-- Ikon Matahari (Dark Mode -> switch to Light) -->
           <svg id="iconSun" class="w-4 h-4 hidden pointer-events-none text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
           </svg>
@@ -144,9 +131,7 @@
     </div>
   </header>
 
-  <!-- ===================================================================== -->
-  <!-- KONTEN UTAMA                                                          -->
-  <!-- ===================================================================== -->
+  <!-- KONTEN UTAMA -->
   <main class="flex-1 w-full max-w-3xl mx-auto px-4 sm:px-6 py-5 sm:py-8 space-y-5 relative z-10">
 
     <!-- BAR JAM & STATUS REAL-TIME -->
@@ -190,7 +175,7 @@
       </div>
     </section>
 
-    <!-- KARTU SUDAH MENGISI (JIKA MULTI-SUBMIT NONAKTIF & SUDAH SUBMIT) -->
+    <!-- KARTU SUDAH MENGISI -->
     <section id="alreadySubmittedCard" class="hidden animate-step bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-card text-center space-y-4">
       <div class="w-14 h-14 rounded-2xl bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto">
         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -205,15 +190,12 @@
       </div>
     </section>
 
-    <!-- =================================================================== -->
-    <!-- WADAH WIZARD FORM UTAMA                                             -->
-    <!-- =================================================================== -->
+    <!-- WADAH WIZARD FORM UTAMA -->
     <div id="wizardContainer" class="space-y-5">
 
       <!-- INDIKATOR LANGKAH (STEPPER) -->
       <nav id="stepperNav" aria-label="Tahapan Pengisian" class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-3.5 sm:px-6 shadow-soft">
         <ol class="flex items-center justify-between gap-2 text-xs sm:text-sm">
-          <!-- Step 1 -->
           <li id="stepIndicator1" class="flex items-center gap-2 font-semibold text-indigo-600 dark:text-indigo-400">
             <span class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold bg-indigo-600 text-white shadow-sm">1</span>
             <span id="stepLabel1">Data Diri</span>
@@ -223,7 +205,6 @@
             <div id="stepBar1" class="h-full w-0 bg-indigo-600 transition-all duration-300"></div>
           </li>
 
-          <!-- Step 2 (Disembunyikan jika mode ABSEN_ONLY) -->
           <li id="stepIndicator2" class="flex items-center gap-2 font-medium text-slate-400 dark:text-slate-500">
             <span class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">2</span>
             <span id="stepLabel2">Soal Kuis</span>
@@ -233,7 +214,6 @@
             <div id="stepBar2" class="h-full w-0 bg-indigo-600 transition-all duration-300"></div>
           </li>
 
-          <!-- Step 3 (Konfirmasi) -->
           <li id="stepIndicator3" class="flex items-center gap-2 font-medium text-slate-400 dark:text-slate-500">
             <span id="stepNumber3" class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">3</span>
             <span>Konfirmasi</span>
@@ -241,9 +221,7 @@
         </ol>
       </nav>
 
-      <!-- ================================================================= -->
-      <!-- LANGKAH 1: FORM DATA DIRI & CEK NIP                               -->
-      <!-- ================================================================= -->
+      <!-- LANGKAH 1: FORM DATA DIRI & CEK NIP -->
       <section id="step1Section" class="animate-step bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-5 sm:p-7 shadow-card space-y-6">
         <div class="border-b border-slate-100 dark:border-slate-800 pb-4">
           <h2 id="step1Title" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
@@ -255,7 +233,7 @@
         </div>
 
         <div class="space-y-5">
-          <!-- FIELD NIP (Selalu tampil di semua mode) -->
+          <!-- FIELD NIP -->
           <div class="space-y-2">
             <div class="flex items-center justify-between">
               <label for="inputNip" class="block text-sm font-semibold text-slate-700 dark:text-slate-200">
@@ -276,7 +254,6 @@
                 autocomplete="off"
                 class="w-full px-4 py-3 rounded-xl font-mono text-base tracking-wider bg-slate-50 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
               />
-              <!-- Tombol Cek NIP khusus mode POST_TEST -->
               <button
                 type="button"
                 id="btnCheckNip"
@@ -309,7 +286,6 @@
 
           <!-- HASIL PENGECEKAN NIP (KHUSUS MODE POST_TEST) -->
           <div id="postTestCheckResult" class="hidden space-y-4">
-            <!-- Kartu Hijau: Identitas Peserta Terhubung -->
             <div id="cardNipFound" class="hidden rounded-2xl bg-emerald-50/90 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 p-4 sm:p-5 space-y-3">
               <div class="flex items-start gap-3">
                 <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 mt-0.5">
@@ -343,7 +319,6 @@
               </div>
             </div>
 
-            <!-- Kartu Merah: Post-Test Sudah Dikerjakan -->
             <div id="cardNipAlreadyDone" class="hidden rounded-2xl bg-rose-50/90 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 p-4 sm:p-5">
               <div class="flex items-start gap-3">
                 <div class="w-9 h-9 rounded-xl bg-rose-600 text-white flex items-center justify-center shrink-0 mt-0.5">
@@ -362,7 +337,6 @@
               </div>
             </div>
 
-            <!-- Kartu Amber: Mode Susulan -->
             <div id="cardNipSusulan" class="hidden rounded-2xl bg-amber-50/90 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 p-4 sm:p-5">
               <div class="flex items-start gap-3">
                 <div class="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 mt-0.5">
@@ -382,9 +356,8 @@
             </div>
           </div>
 
-          <!-- 4 FIELD BIODATA WAJIB (Tampil penuh pada ABSEN_PRE & ABSEN_ONLY, dan muncul pada POST_TEST jika Mode Susulan) -->
+          <!-- 4 FIELD BIODATA WAJIB -->
           <div id="biodataFieldsWrapper" class="space-y-4">
-            <!-- Nama Lengkap -->
             <div class="space-y-1.5">
               <label for="inputNama" class="block text-sm font-semibold text-slate-700 dark:text-slate-200">
                 Nama Lengkap <span class="text-rose-500">*</span>
@@ -398,7 +371,6 @@
               <p id="errNama" class="hidden text-xs font-medium text-rose-600 dark:text-rose-400"></p>
             </div>
 
-            <!-- Jabatan & Unit Kerja -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div class="space-y-1.5">
                 <label for="inputJabatan" class="block text-sm font-semibold text-slate-700 dark:text-slate-200">
@@ -427,7 +399,6 @@
               </div>
             </div>
 
-            <!-- Email -->
             <div class="space-y-1.5">
               <label for="inputEmail" class="block text-sm font-semibold text-slate-700 dark:text-slate-200">
                 Email <span class="text-rose-500">*</span>
@@ -443,7 +414,6 @@
           </div>
         </div>
 
-        <!-- TOMBOL LANJUT LANGKAH 1 -->
         <div id="step1ActionWrapper" class="pt-2">
           <button
             type="button"
@@ -455,9 +425,7 @@
         </div>
       </section>
 
-      <!-- ================================================================= -->
-      <!-- LANGKAH 2: SOAL KUIS (ABSEN_PRE & POST_TEST)                      -->
-      <!-- ================================================================= -->
+      <!-- LANGKAH 2: SOAL KUIS -->
       <section id="step2Section" class="hidden animate-step bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-5 sm:p-7 shadow-card space-y-6">
         <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-4">
           <div>
@@ -481,10 +449,8 @@
           </button>
         </div>
 
-        <!-- Daftar Soal Kuis (Event Delegation Container) -->
         <div id="quizQuestionsContainer" class="space-y-6"></div>
 
-        <!-- Navigasi Langkah 2 -->
         <div class="flex flex-col-reverse sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-100 dark:border-slate-800">
           <button
             type="button"
@@ -504,9 +470,7 @@
         </div>
       </section>
 
-      <!-- ================================================================= -->
-      <!-- LANGKAH 3: KONFIRMASI DATA & PENGIRIMAN                           -->
-      <!-- ================================================================= -->
+      <!-- LANGKAH 3: KONFIRMASI DATA & PENGIRIMAN -->
       <section id="step3Section" class="hidden animate-step bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/90 dark:border-slate-800 p-5 sm:p-7 shadow-card space-y-6">
         <div class="border-b border-slate-100 dark:border-slate-800 pb-4">
           <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
@@ -517,7 +481,6 @@
           </p>
         </div>
 
-        <!-- Kotak Sorotan NIP Terkelompok (8-6-1-3) -->
         <div class="rounded-2xl bg-amber-50/90 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/80 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div class="space-y-1">
             <span class="text-[11px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-400">
@@ -537,7 +500,6 @@
           </button>
         </div>
 
-        <!-- Ringkasan Data Diri -->
         <div class="rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/90 dark:border-slate-700/80 p-4 sm:p-5 space-y-3">
           <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
             Ringkasan Identitas Peserta
@@ -562,7 +524,6 @@
           </dl>
         </div>
 
-        <!-- Ringkasan Jawaban Kuis (Hanya tampil jika mode kuis aktif) -->
         <div id="confirmQuizSummaryBox" class="hidden rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/90 dark:border-slate-700/80 p-4 sm:p-5 flex flex-wrap items-center justify-between gap-3">
           <div class="space-y-0.5">
             <span class="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Status Pengerjaan Kuis</span>
@@ -579,7 +540,6 @@
           </button>
         </div>
 
-        <!-- Pernyataan & Tombol Setuju dan Kirim -->
         <div class="space-y-4 pt-2">
           <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
             Dengan menekan tombol di bawah ini, saya menyatakan bahwa data identitas dan NIP yang diisikan adalah benar dan dapat dipertanggungjawabkan.
@@ -602,9 +562,7 @@
         </div>
       </section>
 
-      <!-- ================================================================= -->
-      <!-- LANGKAH 4: KARTU SUKSES TERKIRIM                                  -->
-      <!-- ================================================================= -->
+      <!-- LANGKAH 4: KARTU SUKSES TERKIRIM -->
       <section id="successSection" class="hidden animate-step bg-white dark:bg-slate-900 rounded-2xl border border-emerald-200/90 dark:border-emerald-800/80 p-6 sm:p-8 shadow-card space-y-6">
         <div class="text-center space-y-3">
           <div class="w-16 h-16 rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto shadow-inner">
@@ -622,7 +580,6 @@
           </div>
         </div>
 
-        <!-- Detail Ringkas Peserta -->
         <div class="rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/80 p-4 sm:p-5 space-y-3">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2.5 border-b border-slate-200/80 dark:border-slate-700">
             <span class="text-xs text-slate-500 dark:text-slate-400">Nama Peserta</span>
@@ -642,7 +599,6 @@
           </div>
         </div>
 
-        <!-- Banner Pesan Penutup -->
         <div id="closingMessageBanner" class="hidden rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800/80 p-4 sm:p-5 space-y-1.5">
           <div class="flex items-center gap-2 text-indigo-700 dark:text-indigo-300 font-bold text-xs uppercase tracking-wider">
             <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -653,7 +609,6 @@
           <p id="closingMessageText" class="text-sm text-slate-700 dark:text-slate-200 whitespace-pre-line leading-relaxed"></p>
         </div>
 
-        <!-- Tombol Multi-Submit -->
         <div id="multiSubmitActionBox" class="hidden pt-1">
           <button
             type="button"
@@ -668,18 +623,14 @@
     </div>
   </main>
 
-  <!-- ===================================================================== -->
-  <!-- FOOTER RESMI                                                          -->
-  <!-- ===================================================================== -->
+  <!-- FOOTER RESMI -->
   <footer class="mt-auto border-t border-slate-200/80 dark:border-slate-800/80 bg-white/60 dark:bg-slate-900/60 py-5 px-4 text-center">
     <p class="text-xs font-medium text-slate-500 dark:text-slate-400">
       &copy; 2026 Sistem Absensi Digital &bull; BAGIAN ORGANISASI SETDA BADUNG
     </p>
   </footer>
 
-  <!-- ===================================================================== -->
-  <!-- MODAL 1: VERIFIKASI PIN ADMIN                                         -->
-  <!-- ===================================================================== -->
+  <!-- MODAL 1: VERIFIKASI PIN ADMIN -->
   <div id="pinModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm">
     <div id="pinModalBackdrop" class="fixed inset-0"></div>
     <div class="relative z-10 w-full max-w-sm bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-2xl space-y-5 animate-step">
@@ -728,13 +679,10 @@
     </div>
   </div>
 
-  <!-- ===================================================================== -->
-  <!-- MODAL 2: ADMIN PANEL LENGKAP                                          -->
-  <!-- ===================================================================== -->
+  <!-- MODAL 2: ADMIN PANEL LENGKAP -->
   <div id="adminModal" class="hidden fixed inset-0 z-40 flex items-center justify-center p-3 sm:p-5 bg-slate-950/60 backdrop-blur-sm">
     <div id="adminModalBackdrop" class="fixed inset-0"></div>
     <div class="relative z-10 w-full max-w-2xl max-h-[90vh] flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden animate-step">
-      <!-- Header Modal Admin -->
       <div class="px-5 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/80 dark:bg-slate-900 shrink-0">
         <div>
           <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">Pengaturan Admin Panel</h3>
@@ -747,7 +695,6 @@
         </button>
       </div>
 
-      <!-- Body Modal Admin (Scrollable) -->
       <div class="p-5 sm:p-6 overflow-y-auto space-y-6 text-sm">
 
         <!-- 1. Mode Sesi Aktif -->
@@ -785,7 +732,6 @@
               Mulai Sesi Acara Baru
             </button>
           </div>
-          <!-- Konfirmasi Inline Tanpa window.confirm() -->
           <div id="newSessionConfirmBox" class="hidden p-3 rounded-xl bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 flex flex-wrap items-center justify-between gap-2 text-xs">
             <span class="text-amber-900 dark:text-amber-200 font-medium">
               Reset cache perangkat ini untuk memulai sesi baru?
@@ -848,7 +794,7 @@
           ></textarea>
         </div>
 
-        <!-- 6. Google Apps Script Web App URL -->
+        <!-- 6. Google Apps Script Web App URL + Diagnostik Tes Koneksi -->
         <div class="space-y-3 p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/90 dark:border-slate-700/80">
           <label for="adminGasUrl" class="block font-bold text-slate-800 dark:text-slate-100">
             6. Google Apps Script Web App URL
@@ -859,7 +805,24 @@
             placeholder="https://script.google.com/macros/s/.../exec"
             class="w-full px-4 py-2.5 rounded-xl font-mono text-xs bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
-          <div class="flex flex-wrap gap-2.5 pt-1">
+
+          <div class="flex flex-wrap gap-2 pt-1">
+            <!-- Tombol Baru: Tes Koneksi Server -->
+            <button
+              type="button"
+              id="btnTestServerConnection"
+              class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/70 dark:hover:bg-emerald-900/70 border border-emerald-300 dark:border-emerald-700 transition-all active:scale-95 cursor-pointer"
+            >
+              <svg id="testServerIcon" class="w-4 h-4 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.348 14.651a3.75 3.75 0 010-5.303m5.304 0a3.75 3.75 0 010 5.303m-7.425 2.122a6.75 6.75 0 010-9.546m9.546 0a6.75 6.75 0 010 9.546M5.106 18.894c-3.808-3.808-3.808-9.98 0-13.789m13.788 0c3.808 3.808 3.808 9.981 0 13.79M12 12h.008v.007H12V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+              </svg>
+              <svg id="testServerSpinner" class="hidden w-4 h-4 animate-spin pointer-events-none" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+              </svg>
+              <span id="btnTestServerText" class="pointer-events-none">Tes Koneksi Server</span>
+            </button>
+
             <button
               type="button"
               id="btnViewGasCode"
@@ -882,6 +845,9 @@
               <span class="pointer-events-none">Salin Kode Google Apps Script</span>
             </button>
           </div>
+
+          <!-- Kotak Hasil Diagnostik Server -->
+          <div id="serverTestResultBox" class="hidden rounded-xl p-3.5 border text-xs space-y-1.5 font-mono leading-relaxed break-words"></div>
         </div>
 
         <!-- 7. Ganti PIN Admin -->
@@ -924,9 +890,7 @@
     </div>
   </div>
 
-  <!-- ===================================================================== -->
-  <!-- MODAL 3: LIHAT KODE GOOGLE APPS SCRIPT                                -->
-  <!-- ===================================================================== -->
+  <!-- MODAL 3: LIHAT KODE GOOGLE APPS SCRIPT -->
   <div id="scriptModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-slate-950/70 backdrop-blur-sm">
     <div id="scriptModalBackdrop" class="fixed inset-0"></div>
     <div class="relative z-10 w-full max-w-3xl max-h-[90vh] flex flex-col bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden animate-step">
@@ -955,21 +919,13 @@
     </div>
   </div>
 
-  <!-- ===================================================================== -->
-  <!-- JAVASCRIPT UTAMA (TERSTRUKTUR, AMAN, BEBAS BUG KLIK & CLOUD SYNC)     -->
-  <!-- ===================================================================== -->
+  <!-- JAVASCRIPT UTAMA -->
   <script>
     (function () {
       'use strict';
 
-      /* ===================================================================
-       * 0. KONFIGURASI DEFAULT URL GOOGLE APPS SCRIPT (CLOUD SYNC)
-       * =================================================================== */
       const DEFAULT_GAS_URL = "https://script.google.com/macros/s/AKfycbxMhMRVoWocolz88WrjcPuFSr7_w50GCl4hRTkSiDVo3U_3OUhqTL5VFkHYRi7Uqokmyw/exec";
 
-      /* ===================================================================
-       * 1. BANK SOAL DEFAULT (Cadangan jika Bank_Soal di Sheets belum diisi)
-       * =================================================================== */
       const DEFAULT_QUESTIONS = [
         {
           id: '1',
@@ -1006,9 +962,6 @@
         }
       ];
 
-      /* ===================================================================
-       * 2. KODE GOOGLE APPS SCRIPT STANDALONE LENGKAP (Cloud Config + Cache + Lock)
-       * =================================================================== */
       const GOOGLE_APPS_SCRIPT_CODE = `// ================= KONFIGURASI STANDALONE =================
 const SPREADSHEET_ID = "1BGDQULa44UubUV08ZG7dIjPzZob3XD821mkv4KoGewg";
 const TIMEZONE = "Asia/Makassar"; // WITA
@@ -1253,7 +1206,6 @@ function doPost(e) {
     const payload = JSON.parse(e.postData.contents);
     const action = payload.action || "submit";
 
-    // Simpan Pengaturan Global Admin ke PropertiesService
     if (action === "saveConfig") {
       const current = getStoredCloudConfig();
       const incoming = payload.config || {};
@@ -1462,9 +1414,6 @@ function doPost(e) {
   }
 }`;
 
-      /* ===================================================================
-       * 3. STATE APLIKASI & PENYIMPANAN LOKAL + CLOUD SYNC
-       * =================================================================== */
       const STORAGE_KEYS = {
         CONFIG: 'setda_badung_absensi_config_v4',
         RECORDS: 'setda_badung_absensi_records_v4',
@@ -1477,7 +1426,7 @@ function doPost(e) {
         DEFAULT_GAS_URL.startsWith('http');
 
       const defaultConfig = {
-        sessionMode: 'ABSEN_PRE', // 'ABSEN_PRE' | 'POST_TEST' | 'ABSEN_ONLY'
+        sessionMode: 'ABSEN_PRE',
         eventName: '',
         timeRestrictionEnabled: false,
         startTime: '08:00',
@@ -1491,18 +1440,14 @@ function doPost(e) {
 
       let appConfig = loadConfig();
       let activeQuestions = [...DEFAULT_QUESTIONS];
-      let currentStep = 1; // 1 = Data Diri, 2 = Kuis, 3 = Konfirmasi, 4 = Sukses
+      let currentStep = 1;
       let userAnswers = {};
-      let postTestNipState = 'idle'; // 'idle' | 'checking' | 'found' | 'already_done' | 'susulan'
+      let postTestNipState = 'idle';
       let verifiedParticipantData = null;
       let lastCheckedNip = '';
       let isSubmitting = false;
 
-      /* ===================================================================
-       * 4. REFERENSI DOM
-       * =================================================================== */
       const dom = {
-        // Header & Theme
         activeModeBadge: document.getElementById('activeModeBadge'),
         cloudSyncBadge: document.getElementById('cloudSyncBadge'),
         headerSubtitle: document.getElementById('headerSubtitle'),
@@ -1511,7 +1456,6 @@ function doPost(e) {
         iconMoon: document.getElementById('iconMoon'),
         iconSun: document.getElementById('iconSun'),
 
-        // Clock & Lock
         liveClockWita: document.getElementById('liveClockWita'),
         scheduleStatusBadge: document.getElementById('scheduleStatusBadge'),
         timeLockedCard: document.getElementById('timeLockedCard'),
@@ -1519,7 +1463,6 @@ function doPost(e) {
         alreadySubmittedCard: document.getElementById('alreadySubmittedCard'),
         wizardContainer: document.getElementById('wizardContainer'),
 
-        // Stepper
         stepperNav: document.getElementById('stepperNav'),
         stepIndicator1: document.getElementById('stepIndicator1'),
         stepIndicator2: document.getElementById('stepIndicator2'),
@@ -1531,7 +1474,6 @@ function doPost(e) {
         stepBar1: document.getElementById('stepBar1'),
         stepBar2: document.getElementById('stepBar2'),
 
-        // Step 1
         step1Section: document.getElementById('step1Section'),
         step1Title: document.getElementById('step1Title'),
         step1Desc: document.getElementById('step1Desc'),
@@ -1543,7 +1485,6 @@ function doPost(e) {
         btnCheckNipSpinner: document.getElementById('btnCheckNipSpinner'),
         errNip: document.getElementById('errNip'),
 
-        // Post-Test NIP Check Cards
         postTestCheckResult: document.getElementById('postTestCheckResult'),
         cardNipFound: document.getElementById('cardNipFound'),
         foundNama: document.getElementById('foundNama'),
@@ -1554,7 +1495,6 @@ function doPost(e) {
         alreadyDoneDetail: document.getElementById('alreadyDoneDetail'),
         cardNipSusulan: document.getElementById('cardNipSusulan'),
 
-        // Biodata Fields
         biodataFieldsWrapper: document.getElementById('biodataFieldsWrapper'),
         inputNama: document.getElementById('inputNama'),
         inputJabatan: document.getElementById('inputJabatan'),
@@ -1568,7 +1508,6 @@ function doPost(e) {
         btnStep1Next: document.getElementById('btnStep1Next'),
         btnStep1NextLabel: document.getElementById('btnStep1NextLabel'),
 
-        // Step 2 (Quiz)
         step2Section: document.getElementById('step2Section'),
         quizSectionTitle: document.getElementById('quizSectionTitle'),
         btnResetQuiz: document.getElementById('btnResetQuiz'),
@@ -1576,7 +1515,6 @@ function doPost(e) {
         btnStep2Back: document.getElementById('btnStep2Back'),
         btnStep2Next: document.getElementById('btnStep2Next'),
 
-        // Step 3 (Confirm)
         step3Section: document.getElementById('step3Section'),
         confirmNipFormatted: document.getElementById('confirmNipFormatted'),
         btnEditDataFromConfirm: document.getElementById('btnEditDataFromConfirm'),
@@ -1592,7 +1530,6 @@ function doPost(e) {
         submitSpinnerIcon: document.getElementById('submitSpinnerIcon'),
         btnSubmitFinalText: document.getElementById('btnSubmitFinalText'),
 
-        // Step 4 (Success)
         successSection: document.getElementById('successSection'),
         successTitle: document.getElementById('successTitle'),
         successSubtitle: document.getElementById('successSubtitle'),
@@ -1606,7 +1543,6 @@ function doPost(e) {
         multiSubmitActionBox: document.getElementById('multiSubmitActionBox'),
         btnFillAnotherParticipant: document.getElementById('btnFillAnotherParticipant'),
 
-        // PIN Modal
         pinModal: document.getElementById('pinModal'),
         pinModalBackdrop: document.getElementById('pinModalBackdrop'),
         btnClosePinModal: document.getElementById('btnClosePinModal'),
@@ -1615,7 +1551,6 @@ function doPost(e) {
         btnCancelPin: document.getElementById('btnCancelPin'),
         btnVerifyPin: document.getElementById('btnVerifyPin'),
 
-        // Admin Modal
         adminModal: document.getElementById('adminModal'),
         adminModalBackdrop: document.getElementById('adminModalBackdrop'),
         btnCloseAdminModal: document.getElementById('btnCloseAdminModal'),
@@ -1632,6 +1567,11 @@ function doPost(e) {
         adminMultiSubmitToggle: document.getElementById('adminMultiSubmitToggle'),
         adminClosingMessage: document.getElementById('adminClosingMessage'),
         adminGasUrl: document.getElementById('adminGasUrl'),
+        btnTestServerConnection: document.getElementById('btnTestServerConnection'),
+        testServerIcon: document.getElementById('testServerIcon'),
+        testServerSpinner: document.getElementById('testServerSpinner'),
+        btnTestServerText: document.getElementById('btnTestServerText'),
+        serverTestResultBox: document.getElementById('serverTestResultBox'),
         btnViewGasCode: document.getElementById('btnViewGasCode'),
         btnCopyGasCodeDirect: document.getElementById('btnCopyGasCodeDirect'),
         adminNewPin: document.getElementById('adminNewPin'),
@@ -1641,20 +1581,15 @@ function doPost(e) {
         saveAdminSpinner: document.getElementById('saveAdminSpinner'),
         btnSaveAdminSettingsText: document.getElementById('btnSaveAdminSettingsText'),
 
-        // Script Modal
         scriptModal: document.getElementById('scriptModal'),
         scriptModalBackdrop: document.getElementById('scriptModalBackdrop'),
         btnCloseScriptModal: document.getElementById('btnCloseScriptModal'),
         gasCodeViewer: document.getElementById('gasCodeViewer'),
         btnCopyGasFromModal: document.getElementById('btnCopyGasFromModal'),
 
-        // Toast
         toastContainer: document.getElementById('toastContainer')
       };
 
-      /* ===================================================================
-       * 5. UTILITAS PENYIMPANAN, TEMA, TOAST & FORMATTER
-       * =================================================================== */
       function loadConfig() {
         try {
           const raw = localStorage.getItem(STORAGE_KEYS.CONFIG);
@@ -1744,7 +1679,7 @@ function doPost(e) {
           setTimeout(() => {
             if (toast.parentNode) toast.parentNode.removeChild(toast);
           }, 300);
-        }, 3200);
+        }, 3800);
       }
 
       function formatNipGrouped(digits) {
@@ -1782,7 +1717,159 @@ function doPost(e) {
       }
 
       /* ===================================================================
-       * 6. CLOUD CONFIG SYNC (GET ?action=getConfig & POST action="saveConfig")
+       * DIAGNOSTIK TES KONEKSI SERVER (GET + POST)
+       * =================================================================== */
+      function renderDiagnosticBox(statusType, lines) {
+        const styles = {
+          loading: 'bg-sky-50/90 dark:bg-sky-950/50 border-sky-300 dark:border-sky-800 text-sky-900 dark:text-sky-200',
+          success: 'bg-emerald-50/90 dark:bg-emerald-950/50 border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200',
+          warning: 'bg-amber-50/90 dark:bg-amber-950/50 border-amber-300 dark:border-amber-800 text-amber-950 dark:text-amber-200',
+          error: 'bg-rose-50/90 dark:bg-rose-950/50 border-rose-300 dark:border-rose-800 text-rose-950 dark:text-rose-200'
+        };
+        dom.serverTestResultBox.className = `rounded-xl p-3.5 border text-xs space-y-1 font-mono leading-relaxed break-words ${styles[statusType] || styles.loading}`;
+        dom.serverTestResultBox.innerHTML = lines.map((line) => `<div>${escapeHtml(line)}</div>`).join('');
+        dom.serverTestResultBox.classList.remove('hidden');
+      }
+
+      async function runServerConnectionDiagnostics() {
+        const targetUrl = dom.adminGasUrl.value.trim() || getEffectiveGasUrl();
+        if (!targetUrl) {
+          renderDiagnosticBox('error', [
+            '[GAGAL] URL Web App kosong.',
+            'Tempelkan URL berakhiran /exec pada kotak nomor 6 terlebih dahulu.'
+          ]);
+          return;
+        }
+
+        if (!targetUrl.endsWith('/exec')) {
+          renderDiagnosticBox('warning', [
+            '[PERINGATAN] URL tidak berakhiran /exec.',
+            `URL terdeteksi: ${targetUrl}`,
+            'Pastikan menyalin Web App URL (/exec), bukan URL /dev atau link Google Sheets.'
+          ]);
+        }
+
+        dom.btnTestServerConnection.disabled = true;
+        dom.testServerIcon.classList.add('hidden');
+        dom.testServerSpinner.classList.remove('hidden');
+        dom.btnTestServerText.textContent = 'Menguji Server...';
+
+        const logs = [`Target: ${targetUrl.slice(0, 62)}...`];
+        renderDiagnosticBox('loading', [...logs, '1/2 Menguji koneksi GET (?action=getConfig)...']);
+
+        // TAHAP 1: UJI GET ?action=getConfig
+        let getOk = false;
+        let hasCloudConfig = false;
+        try {
+          const urlGet = new URL(targetUrl);
+          urlGet.searchParams.set('action', 'getConfig');
+          urlGet.searchParams.set('_t', String(Date.now()));
+
+          const ctrlGet = new AbortController();
+          const tGet = setTimeout(() => ctrlGet.abort(), 10000);
+          const resGet = await fetch(urlGet.toString(), { method: 'GET', signal: ctrlGet.signal });
+          clearTimeout(tGet);
+
+          const rawTextGet = await resGet.text();
+          let jsonGet = null;
+          try {
+            jsonGet = JSON.parse(rawTextGet);
+          } catch (parseErr) {
+            const isHtmlLogin = rawTextGet.includes('<!DOCTYPE') || rawTextGet.includes('<html');
+            logs.push(`[GET HTTP ${resGet.status}] Gagal parse JSON.`);
+            logs.push(isHtmlLogin
+              ? 'Penyebab: Server mengembalikan halaman HTML Login/Error Google. Pastikan Who has access = "Anyone".'
+              : `Respon mentah: ${rawTextGet.slice(0, 140)}`);
+            renderDiagnosticBox('error', logs);
+            resetTestButtonUI();
+            return;
+          }
+
+          if (jsonGet && jsonGet.status === 'success' && jsonGet.config) {
+            getOk = true;
+            hasCloudConfig = true;
+            logs.push(`[GET OK] Cloud Config aktif (Mode: ${jsonGet.config.sessionMode || '-'}).`);
+          } else if (jsonGet && jsonGet.status === 'success') {
+            getOk = true;
+            logs.push(`[GET PARSIAL] Server membalas: "${jsonGet.message || 'OK'}", TETAPI objek "config" tidak ada.`);
+            logs.push('Penyebab: Deployment masih memakai kode lama! Wajib Deploy -> Manage deployments -> Edit -> pilih "New version".');
+          } else {
+            logs.push(`[GET ERROR] Balasan server: ${JSON.stringify(jsonGet)}`);
+            renderDiagnosticBox('error', logs);
+            resetTestButtonUI();
+            return;
+          }
+        } catch (errGet) {
+          const msg = errGet.name === 'AbortError'
+            ? 'Timeout (>10 detik) saat menghubungi server.'
+            : `${errGet.name}: ${errGet.message}`;
+          logs.push(`[GET GAGAL] ${msg}`);
+          logs.push('Kemungkinan penyebab: Brave Shields / AdBlocker memblokir redirect ke script.googleusercontent.com, atau koneksi internet terputus.');
+          renderDiagnosticBox('error', logs);
+          resetTestButtonUI();
+          return;
+        }
+
+        // TAHAP 2: UJI POST (action: "getQuestions")
+        renderDiagnosticBox('loading', [...logs, '2/2 Menguji jalur kirim POST...']);
+        try {
+          const ctrlPost = new AbortController();
+          const tPost = setTimeout(() => ctrlPost.abort(), 10000);
+          const resPost = await fetch(targetUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify({ action: 'getQuestions' }),
+            signal: ctrlPost.signal
+          });
+          clearTimeout(tPost);
+
+          const rawTextPost = await resPost.text();
+          let jsonPost = null;
+          try {
+            jsonPost = JSON.parse(rawTextPost);
+          } catch (parsePostErr) {
+            logs.push(`[POST HTTP ${resPost.status}] Respon bukan JSON.`);
+            logs.push(`Isi respon: ${rawTextPost.slice(0, 140)}`);
+            renderDiagnosticBox('error', logs);
+            resetTestButtonUI();
+            return;
+          }
+
+          if (jsonPost && jsonPost.status === 'success') {
+            const qCount = Array.isArray(jsonPost.questions) ? jsonPost.questions.length : 0;
+            logs.push(`[POST OK] Jalur kirim data berfungsi normal (${qCount} soal terbaca).`);
+            if (getOk && hasCloudConfig) {
+              logs.push('KESIMPULAN: Koneksi & Cloud Sync 100% SIAP! Silakan klik "Simpan Semua Pengaturan".');
+              renderDiagnosticBox('success', logs);
+            } else {
+              logs.push('KESIMPULAN: Jalur POST terhubung, tetapi silakan deploy "New version" di Apps Script agar Cloud Config aktif.');
+              renderDiagnosticBox('warning', logs);
+            }
+          } else {
+            logs.push(`[POST ERROR] Server membalas: ${JSON.stringify(jsonPost)}`);
+            renderDiagnosticBox('error', logs);
+          }
+        } catch (errPost) {
+          const msgPost = errPost.name === 'AbortError'
+            ? 'Timeout (>10 detik) saat mengirim POST.'
+            : `${errPost.name}: ${errPost.message}`;
+          logs.push(`[POST GAGAL] ${msgPost}`);
+          logs.push('Penyebab: Browser memblokir redirect POST lintas-domain (matikan Brave Shields / ekstensi privasi pada halaman ini).');
+          renderDiagnosticBox('error', logs);
+        } finally {
+          resetTestButtonUI();
+        }
+      }
+
+      function resetTestButtonUI() {
+        dom.btnTestServerConnection.disabled = false;
+        dom.testServerIcon.classList.remove('hidden');
+        dom.testServerSpinner.classList.add('hidden');
+        dom.btnTestServerText.textContent = 'Tes Koneksi Server';
+      }
+
+      /* ===================================================================
+       * CLOUD CONFIG SYNC
        * =================================================================== */
       async function syncCloudConfigOnLoad() {
         const gasUrl = getEffectiveGasUrl();
@@ -1838,7 +1925,7 @@ function doPost(e) {
       }
 
       /* ===================================================================
-       * 7. JAM REAL-TIME WITA & PEMBATASAN JADWAL
+       * JAM REAL-TIME WITA & PEMBATASAN JADWAL
        * =================================================================== */
       function getWitaNowParts() {
         const now = new Date();
@@ -1925,7 +2012,7 @@ function doPost(e) {
       }
 
       /* ===================================================================
-       * 8. SINKRONISASI MODE SESI & RENDER UI
+       * SINKRONISASI MODE SESI & RENDER UI
        * =================================================================== */
       function applySessionModeUI() {
         const mode = appConfig.sessionMode;
@@ -2022,7 +2109,7 @@ function doPost(e) {
       }
 
       /* ===================================================================
-       * 9. PENGECEKAN NIP PADA MODE POST_TEST
+       * PENGECEKAN NIP PADA MODE POST_TEST
        * =================================================================== */
       async function checkNipForPostTest(forceManual = false) {
         const nip = dom.inputNip.value.replace(/\D/g, '');
@@ -2150,7 +2237,7 @@ function doPost(e) {
       }
 
       /* ===================================================================
-       * 10. VALIDASI LANGKAH 1 & NAVIGASI WIZARD
+       * VALIDASI LANGKAH 1 & NAVIGASI WIZARD
        * =================================================================== */
       function showFieldError(el, msg) {
         el.textContent = msg;
@@ -2294,7 +2381,7 @@ function doPost(e) {
       }
 
       /* ===================================================================
-       * 11. RENDER & INTERAKSI SOAL KUIS
+       * RENDER & INTERAKSI SOAL KUIS
        * =================================================================== */
       function normalizeQuestionOptions(rawOptions) {
         if (Array.isArray(rawOptions)) {
@@ -2376,7 +2463,7 @@ function doPost(e) {
       }
 
       /* ===================================================================
-       * 12. KONFIRMASI & PENGIRIMAN FINAL
+       * KONFIRMASI & PENGIRIMAN FINAL
        * =================================================================== */
       function getCurrentParticipantPayload() {
         const mode = appConfig.sessionMode;
@@ -2630,7 +2717,7 @@ function doPost(e) {
       }
 
       /* ===================================================================
-       * 13. MODAL ADMIN PANEL, PIN MODAL & CLOUD CONFIG SAVE
+       * MODAL ADMIN PANEL, PIN MODAL & CLOUD CONFIG SAVE
        * =================================================================== */
       function openPinModal() {
         dom.inputAdminPin.value = '';
@@ -2667,6 +2754,7 @@ function doPost(e) {
         dom.adminNewPin.value = '';
         dom.adminConfirmNewPin.value = '';
         dom.newSessionConfirmBox.classList.add('hidden');
+        dom.serverTestResultBox.classList.add('hidden');
 
         toggleAdminTimeInputsVisibility();
         dom.adminModal.classList.remove('hidden');
@@ -2714,6 +2802,7 @@ function doPost(e) {
 
         const gasUrl = getEffectiveGasUrl();
         let cloudSaved = false;
+        let specificErrorReason = '';
 
         if (gasUrl) {
           dom.btnSaveAdminSettings.disabled = true;
@@ -2721,7 +2810,7 @@ function doPost(e) {
           dom.btnSaveAdminSettingsText.textContent = 'Menyimpan ke Server...';
 
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 9000);
+          const timeoutId = setTimeout(() => controller.abort(), 12000);
           try {
             const res = await fetch(gasUrl, {
               method: 'POST',
@@ -2742,13 +2831,28 @@ function doPost(e) {
               }),
               signal: controller.signal
             });
-            if (res.ok) {
-              const resJson = await res.json();
+
+            const rawBody = await res.text();
+            let resJson = null;
+            try {
+              resJson = JSON.parse(rawBody);
+            } catch (parseErr) {
+              specificErrorReason = rawBody.includes('<html') || rawBody.includes('<!DOCTYPE')
+                ? 'Server membalas HTML (Akses Web App belum disetel "Anyone").'
+                : `Respon bukan JSON (HTTP ${res.status}).`;
+            }
+
+            if (resJson) {
               if (resJson.status === 'success') {
                 cloudSaved = true;
+              } else {
+                specificErrorReason = resJson.message || 'Server menolak perintah saveConfig (Deployment masih versi lama).';
               }
             }
           } catch (err) {
+            specificErrorReason = err.name === 'AbortError'
+              ? 'Koneksi timeout (>12 detik).'
+              : `${err.name}: ${err.message} (Cek Brave Shields / AdBlocker).`;
           } finally {
             clearTimeout(timeoutId);
             dom.btnSaveAdminSettings.disabled = false;
@@ -2756,8 +2860,6 @@ function doPost(e) {
             dom.btnSaveAdminSettingsText.textContent = 'Simpan Semua Pengaturan';
           }
         }
-
-        closeAdminModal();
 
         if (prevMode !== appConfig.sessionMode) {
           resetFormForNewParticipant();
@@ -2768,10 +2870,17 @@ function doPost(e) {
         fetchRemoteQuestionsIfAvailable();
 
         if (cloudSaved) {
+          closeAdminModal();
           showToast('Pengaturan tersimpan & tersinkron ke semua HP peserta!', 'success');
         } else if (gasUrl) {
-          showToast('Tersimpan lokal (gagal sinkron ke server Google).', 'warning');
+          renderDiagnosticBox('error', [
+            '[GAGAL SINKRON KE SERVER GOOGLE]',
+            `Detail Error: ${specificErrorReason || 'Tidak diketahui'}`,
+            'Klik "Tes Koneksi Server" di atas untuk rincian lengkap.'
+          ]);
+          showToast(`Tersimpan lokal: ${specificErrorReason}`, 'warning');
         } else {
+          closeAdminModal();
           showToast('Pengaturan Admin berhasil disimpan secara lokal.', 'success');
         }
       }
@@ -2812,10 +2921,9 @@ function doPost(e) {
       }
 
       /* ===================================================================
-       * 14. PENGIKATAN EVENT LISTENER (LENGKAP & STABIL)
+       * PENGIKATAN EVENT LISTENER
        * =================================================================== */
       function bindEvents() {
-        // Toggle Dark/Light Mode
         dom.btnToggleTheme.addEventListener('click', () => {
           const isCurrentlyDark = document.documentElement.classList.contains('dark');
           const nextDark = !isCurrentlyDark;
@@ -2825,7 +2933,6 @@ function doPost(e) {
           } catch (e) {}
         });
 
-        // Input NIP (Filter angka, counter 18 digit, live format 8-6-1-3, auto check di Post-Test)
         dom.inputNip.addEventListener('input', () => {
           const digitsOnly = dom.inputNip.value.replace(/\D/g, '').slice(0, 18);
           dom.inputNip.value = digitsOnly;
@@ -2848,10 +2955,8 @@ function doPost(e) {
           }
         });
 
-        // Tombol Cek NIP Manual (Post-Test)
         dom.btnCheckNip.addEventListener('click', () => checkNipForPostTest(true));
 
-        // Langkah 1 -> Lanjut
         dom.btnStep1Next.addEventListener('click', () => {
           if (!validateStep1()) return;
           if (appConfig.sessionMode === 'ABSEN_ONLY') {
@@ -2861,7 +2966,6 @@ function doPost(e) {
           }
         });
 
-        // Langkah 2 (Kuis) -> Pilih opsi jawaban via Event Delegation
         dom.quizQuestionsContainer.addEventListener('click', (e) => {
           const btn = e.target.closest('button[data-q-index][data-opt-index]');
           if (!btn) return;
@@ -2871,17 +2975,14 @@ function doPost(e) {
           renderQuizQuestions();
         });
 
-        // Reset Pilihan Jawaban Kuis
         dom.btnResetQuiz.addEventListener('click', () => {
           userAnswers = {};
           renderQuizQuestions();
           showToast('Pilihan jawaban berhasil direset.', 'info');
         });
 
-        // Langkah 2 -> Kembali ke Data Diri
         dom.btnStep2Back.addEventListener('click', () => goToStep(1));
 
-        // Langkah 2 -> Lanjut ke Konfirmasi
         dom.btnStep2Next.addEventListener('click', () => {
           const unansweredIdx = activeQuestions.findIndex((_, idx) => userAnswers[idx] === undefined);
           if (unansweredIdx !== -1) {
@@ -2895,15 +2996,11 @@ function doPost(e) {
           goToStep(3);
         });
 
-        // Langkah 3 (Konfirmasi) -> Ubah Data / Periksa Jawaban / Kirim Final
         dom.btnEditDataFromConfirm.addEventListener('click', () => goToStep(1));
         dom.btnEditQuizFromConfirm.addEventListener('click', () => goToStep(2));
         dom.btnSubmitFinal.addEventListener('click', handleFinalSubmit);
-
-        // Langkah 4 (Sukses) -> Isi Presensi Peserta Lain
         dom.btnFillAnotherParticipant.addEventListener('click', resetFormForNewParticipant);
 
-        // Modal PIN Admin
         dom.btnOpenAdmin.addEventListener('click', openPinModal);
         dom.btnClosePinModal.addEventListener('click', closePinModal);
         dom.btnCancelPin.addEventListener('click', closePinModal);
@@ -2913,14 +3010,13 @@ function doPost(e) {
           if (e.key === 'Enter') verifyAdminPin();
         });
 
-        // Modal Admin Panel
         dom.btnCloseAdminModal.addEventListener('click', closeAdminModal);
         dom.btnCancelAdminSettings.addEventListener('click', closeAdminModal);
         dom.adminModalBackdrop.addEventListener('click', closeAdminModal);
         dom.adminTimeRestrictToggle.addEventListener('change', toggleAdminTimeInputsVisibility);
         dom.btnSaveAdminSettings.addEventListener('click', saveAdminSettings);
+        dom.btnTestServerConnection.addEventListener('click', runServerConnectionDiagnostics);
 
-        // Mulai Sesi Acara Baru (Konfirmasi Inline)
         dom.btnStartNewSession.addEventListener('click', () => {
           dom.newSessionConfirmBox.classList.remove('hidden');
         });
@@ -2936,7 +3032,6 @@ function doPost(e) {
           showToast('Sesi acara baru dimulai pada perangkat ini.', 'success');
         });
 
-        // Lihat & Salin Kode Google Apps Script
         dom.btnViewGasCode.addEventListener('click', openScriptModal);
         dom.btnCloseScriptModal.addEventListener('click', closeScriptModal);
         dom.scriptModalBackdrop.addEventListener('click', closeScriptModal);
@@ -2948,9 +3043,6 @@ function doPost(e) {
         });
       }
 
-      /* ===================================================================
-       * 15. INISIALISASI APLIKASI & CLOUD SYNC AWAL
-       * =================================================================== */
       async function initApp() {
         initTheme();
         userAnswers = {};
