@@ -807,7 +807,6 @@
           />
 
           <div class="flex flex-wrap gap-2 pt-1">
-            <!-- Tombol Baru: Tes Koneksi Server -->
             <button
               type="button"
               id="btnTestServerConnection"
@@ -992,6 +991,7 @@ function getStoredCloudConfig() {
   const defaults = {
     namaAcara: "",
     sessionMode: "ABSEN_PRE",
+    mode: "ABSEN_PRE",
     scheduleEnabled: false,
     openTime: "08:00",
     closeTime: "16:00",
@@ -1163,11 +1163,13 @@ function doGet(e) {
 
     if (action === "getConfig") {
       const cfg = getStoredCloudConfig();
+      const activeMode = cfg.sessionMode || cfg.mode || "ABSEN_PRE";
       return createJsonResponse({
         status: "success",
         config: {
           namaAcara: cfg.namaAcara,
-          sessionMode: cfg.sessionMode,
+          sessionMode: activeMode,
+          mode: activeMode,
           scheduleEnabled: cfg.scheduleEnabled,
           openTime: cfg.openTime,
           closeTime: cfg.closeTime,
@@ -1209,9 +1211,15 @@ function doPost(e) {
     if (action === "saveConfig") {
       const current = getStoredCloudConfig();
       const incoming = payload.config || {};
+      const submittedPin = String(payload.pin || payload.adminPin || incoming.currentPin || "").trim();
+      if (submittedPin && submittedPin !== String(current.adminPin || "1234")) {
+        return createJsonResponse({ status: "error", message: "PIN Admin tidak valid." });
+      }
+      const nextMode = incoming.sessionMode || incoming.mode || current.sessionMode;
       const updated = {
         namaAcara: incoming.namaAcara !== undefined ? String(incoming.namaAcara) : current.namaAcara,
-        sessionMode: incoming.sessionMode || current.sessionMode,
+        sessionMode: nextMode,
+        mode: nextMode,
         scheduleEnabled: Boolean(incoming.scheduleEnabled),
         openTime: incoming.openTime || current.openTime,
         closeTime: incoming.closeTime || current.closeTime,
@@ -1446,6 +1454,7 @@ function doPost(e) {
       let verifiedParticipantData = null;
       let lastCheckedNip = '';
       let isSubmitting = false;
+      let lastVerifiedSessionPin = '';
 
       const dom = {
         activeModeBadge: document.getElementById('activeModeBadge'),
@@ -1723,7 +1732,7 @@ function doPost(e) {
         const styles = {
           loading: 'bg-sky-50/90 dark:bg-sky-950/50 border-sky-300 dark:border-sky-800 text-sky-900 dark:text-sky-200',
           success: 'bg-emerald-50/90 dark:bg-emerald-950/50 border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200',
-          warning: 'bg-amber-50/90 dark:bg-amber-950/50 border-amber-300 dark:border-amber-800 text-amber-950 dark:text-amber-200',
+          warning: 'bg-amber-50/90 dark:bg-amber-950/50 border-amber-300 dark:border-amber-800 text-amber-900 dark:text-amber-200',
           error: 'bg-rose-50/90 dark:bg-rose-950/50 border-rose-300 dark:border-rose-800 text-rose-950 dark:text-rose-200'
         };
         dom.serverTestResultBox.className = `rounded-xl p-3.5 border text-xs space-y-1 font-mono leading-relaxed break-words ${styles[statusType] || styles.loading}`;
@@ -1741,14 +1750,6 @@ function doPost(e) {
           return;
         }
 
-        if (!targetUrl.endsWith('/exec')) {
-          renderDiagnosticBox('warning', [
-            '[PERINGATAN] URL tidak berakhiran /exec.',
-            `URL terdeteksi: ${targetUrl}`,
-            'Pastikan menyalin Web App URL (/exec), bukan URL /dev atau link Google Sheets.'
-          ]);
-        }
-
         dom.btnTestServerConnection.disabled = true;
         dom.testServerIcon.classList.add('hidden');
         dom.testServerSpinner.classList.remove('hidden');
@@ -1757,7 +1758,6 @@ function doPost(e) {
         const logs = [`Target: ${targetUrl.slice(0, 62)}...`];
         renderDiagnosticBox('loading', [...logs, '1/2 Menguji koneksi GET (?action=getConfig)...']);
 
-        // TAHAP 1: UJI GET ?action=getConfig
         let getOk = false;
         let hasCloudConfig = false;
         try {
@@ -1788,7 +1788,8 @@ function doPost(e) {
           if (jsonGet && jsonGet.status === 'success' && jsonGet.config) {
             getOk = true;
             hasCloudConfig = true;
-            logs.push(`[GET OK] Cloud Config aktif (Mode: ${jsonGet.config.sessionMode || '-'}).`);
+            const detectedMode = jsonGet.config.sessionMode || jsonGet.config.mode || 'Belum disimpan';
+            logs.push(`[GET OK] Cloud Config aktif (Mode: ${detectedMode}).`);
           } else if (jsonGet && jsonGet.status === 'success') {
             getOk = true;
             logs.push(`[GET PARSIAL] Server membalas: "${jsonGet.message || 'OK'}", TETAPI objek "config" tidak ada.`);
@@ -1804,13 +1805,12 @@ function doPost(e) {
             ? 'Timeout (>10 detik) saat menghubungi server.'
             : `${errGet.name}: ${errGet.message}`;
           logs.push(`[GET GAGAL] ${msg}`);
-          logs.push('Kemungkinan penyebab: Brave Shields / AdBlocker memblokir redirect ke script.googleusercontent.com, atau koneksi internet terputus.');
+          logs.push('Kemungkinan penyebab: Brave Shields / AdBlocker memblokir redirect ke script.googleusercontent.com.');
           renderDiagnosticBox('error', logs);
           resetTestButtonUI();
           return;
         }
 
-        // TAHAP 2: UJI POST (action: "getQuestions")
         renderDiagnosticBox('loading', [...logs, '2/2 Menguji jalur kirim POST...']);
         try {
           const ctrlPost = new AbortController();
@@ -1842,7 +1842,7 @@ function doPost(e) {
               logs.push('KESIMPULAN: Koneksi & Cloud Sync 100% SIAP! Silakan klik "Simpan Semua Pengaturan".');
               renderDiagnosticBox('success', logs);
             } else {
-              logs.push('KESIMPULAN: Jalur POST terhubung, tetapi silakan deploy "New version" di Apps Script agar Cloud Config aktif.');
+              logs.push('KESIMPULAN: Jalur POST terhubung, tetapi silakan deploy "New version" di Apps Script.');
               renderDiagnosticBox('warning', logs);
             }
           } else {
@@ -1854,7 +1854,6 @@ function doPost(e) {
             ? 'Timeout (>10 detik) saat mengirim POST.'
             : `${errPost.name}: ${errPost.message}`;
           logs.push(`[POST GAGAL] ${msgPost}`);
-          logs.push('Penyebab: Browser memblokir redirect POST lintas-domain (matikan Brave Shields / ekstensi privasi pada halaman ini).');
           renderDiagnosticBox('error', logs);
         } finally {
           resetTestButtonUI();
@@ -1894,14 +1893,15 @@ function doPost(e) {
             if (json.status === 'success' && json.config) {
               const cloud = json.config;
               const prevMode = appConfig.sessionMode;
+              const incomingMode = cloud.sessionMode || cloud.mode;
 
-              appConfig.eventName = cloud.namaAcara !== undefined ? cloud.namaAcara : appConfig.eventName;
-              appConfig.sessionMode = cloud.sessionMode || appConfig.sessionMode;
-              appConfig.timeRestrictionEnabled = Boolean(cloud.scheduleEnabled);
-              appConfig.startTime = cloud.openTime || appConfig.startTime;
-              appConfig.endTime = cloud.closeTime || appConfig.endTime;
-              appConfig.multiSubmitEnabled = cloud.multiSubmit !== undefined ? Boolean(cloud.multiSubmit) : appConfig.multiSubmitEnabled;
-              appConfig.closingMessage = cloud.closingMessage !== undefined ? cloud.closingMessage : appConfig.closingMessage;
+              if (cloud.namaAcara !== undefined) appConfig.eventName = cloud.namaAcara;
+              if (incomingMode) appConfig.sessionMode = incomingMode;
+              if (cloud.scheduleEnabled !== undefined) appConfig.timeRestrictionEnabled = Boolean(cloud.scheduleEnabled);
+              if (cloud.openTime) appConfig.startTime = cloud.openTime;
+              if (cloud.closeTime) appConfig.endTime = cloud.closeTime;
+              if (cloud.multiSubmit !== undefined) appConfig.multiSubmitEnabled = Boolean(cloud.multiSubmit);
+              if (cloud.closingMessage !== undefined) appConfig.closingMessage = cloud.closingMessage;
               if (cloud.adminPin) appConfig.adminPin = String(cloud.adminPin);
               if (cloud.sessionEpoch) appConfig.sessionEpoch = Number(cloud.sessionEpoch);
               appConfig.gasUrl = gasUrl;
@@ -2734,6 +2734,7 @@ function doPost(e) {
         const entered = dom.inputAdminPin.value.trim();
         const validPin = appConfig.adminPin || '1234';
         if (entered === validPin) {
+          lastVerifiedSessionPin = entered;
           closePinModal();
           openAdminModal();
         } else {
@@ -2773,6 +2774,7 @@ function doPost(e) {
       }
 
       async function saveAdminSettings() {
+        const authPinForServer = lastVerifiedSessionPin || appConfig.adminPin || '1234';
         const newPin = dom.adminNewPin.value.trim();
         const confirmPin = dom.adminConfirmNewPin.value.trim();
 
@@ -2817,14 +2819,18 @@ function doPost(e) {
               headers: { 'Content-Type': 'text/plain;charset=utf-8' },
               body: JSON.stringify({
                 action: 'saveConfig',
+                pin: authPinForServer,
+                adminPin: authPinForServer,
                 config: {
                   namaAcara: appConfig.eventName,
                   sessionMode: appConfig.sessionMode,
+                  mode: appConfig.sessionMode,
                   scheduleEnabled: appConfig.timeRestrictionEnabled,
                   openTime: appConfig.startTime,
                   closeTime: appConfig.endTime,
                   multiSubmit: appConfig.multiSubmitEnabled,
                   closingMessage: appConfig.closingMessage,
+                  currentPin: authPinForServer,
                   adminPin: appConfig.adminPin,
                   sessionEpoch: appConfig.sessionEpoch
                 }
@@ -2845,8 +2851,9 @@ function doPost(e) {
             if (resJson) {
               if (resJson.status === 'success') {
                 cloudSaved = true;
+                lastVerifiedSessionPin = appConfig.adminPin;
               } else {
-                specificErrorReason = resJson.message || 'Server menolak perintah saveConfig (Deployment masih versi lama).';
+                specificErrorReason = resJson.message || 'Server menolak perintah saveConfig.';
               }
             }
           } catch (err) {
