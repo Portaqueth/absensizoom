@@ -1705,7 +1705,7 @@ function doPost(e) {
       }
 
       /* ===================================================================
-       * VALIDASI EMAIL STRICT & REAL-TIME
+       * VALIDASI EMAIL STRICT & REAL-TIME (TERMASUK DETEKSI TYPO DOMAIN)
        * =================================================================== */
       function validateEmailString(rawValue) {
         const email = String(rawValue || '').trim();
@@ -1731,6 +1731,27 @@ function doPost(e) {
         if (tld.length < 2 || !/^[a-zA-Z]{2,}$/.test(tld)) {
           return { valid: false, reason: 'Akhiran domain email tidak valid (contoh: .com, .id, .go.id).' };
         }
+
+        const lowerDomain = domainPart.toLowerCase();
+        const commonTypos = {
+          'gmail.co': 'gmail.com',
+          'gmail.con': 'gmail.com',
+          'gmail.cm': 'gmail.com',
+          'gamil.com': 'gmail.com',
+          'gmial.com': 'gmail.com',
+          'yahoo.co': 'yahoo.co.id atau yahoo.com',
+          'yahoo.con': 'yahoo.com',
+          'hotmail.co': 'hotmail.com',
+          'outlook.co': 'outlook.com'
+        };
+
+        if (commonTypos[lowerDomain]) {
+          return {
+            valid: false,
+            reason: `Domain "@${lowerDomain}" kemungkinan salah ketik. Maksud Anda "@${commonTypos[lowerDomain]}"?`
+          };
+        }
+
         const strictEmailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
         if (!strictEmailRegex.test(email)) {
           return { valid: false, reason: 'Format alamat Email tidak valid. Periksa kembali penulisan Anda.' };
@@ -2442,7 +2463,9 @@ function doPost(e) {
 
         dom.stepBar1.style.width = step > 1 ? '100%' : '0%';
 
-        if (step < 2) {
+        if (appConfig.sessionMode === 'ABSEN_ONLY') {
+          dom.stepIndicator2.classList.add('hidden');
+        } else if (step < 2) {
           dom.stepIndicator2.className = inactiveClass;
           dom.stepIndicator2.querySelector('span').className = 'w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400';
         } else if (step === 2) {
